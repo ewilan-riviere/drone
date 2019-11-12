@@ -6,7 +6,7 @@
 
 Se contente de réceptionner le colis (payload), via les git webhooks puis d'effectuer la livraison, en lançant un `git pull` sur les différents répertoires dédiés au projet, d'où son nom ;)
 
-### Setup
+## Setup
 
 Configurer la variable d'environnement suivante :
 
