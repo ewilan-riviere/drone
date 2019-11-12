@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const port = parseInt(process.env.PORT || '3000', 10);
 
-let map = JSON.parse(fs.readFileSync('map.json'));
+let repositories = JSON.parse(fs.readFileSync('repositories.json'));
 
 let express = require('express'),
     http = require('http'),
@@ -15,7 +15,7 @@ let express = require('express'),
 
 app.use(bodyParser.json());
 
-app.post('/deploy', (req, res) => {
+app.post(process.env.WEBHOOK_PATH || '/', (req, res) => {
   if (!req.body || !req.body.repository || !req.body.repository.name) {
     return res.status(400).json({ message: 'Invalid request!' });
   }
@@ -24,8 +24,8 @@ app.post('/deploy', (req, res) => {
 
   let dirs = [name];
 
-  if (map[name]) {
-    dirs = map[name];
+  if (repositories[name]) {
+    dirs = repositories[name];
   }
 
   dirs.forEach(function(dirname) {
@@ -40,6 +40,6 @@ app.post('/deploy', (req, res) => {
   res.status(200).json({ message: 'Git Hook received!' });
 });
 
-http.createServer(app).listen(port, () => {  
+http.createServer(app).listen(port, () => {
   console.log(`Express server listening on port ${port}`);
 });
