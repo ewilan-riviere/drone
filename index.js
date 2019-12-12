@@ -68,6 +68,10 @@ app.post(process.env.WEBPULL_PATH || '/prod', (req, res) => {
     });
   }
 
+  project.scripts.forEach(script => {
+    childprocess.exec(script);
+  });
+
   project.servers.forEach(function (server) {
     var conn = new Client();
     conn.on('ready', function () {

@@ -62,6 +62,10 @@ Pour configurer la liste des serveurs par projet, créer un fichier `servers.jso
     "dirs": [
       "/var/www/laforet-back",
       "/var/www/laforet-front"
+    ],
+    // Scripts de déploiement
+    "scripts": [
+      "my-script"
     ]
   }
 }
