@@ -74,7 +74,7 @@ app.post(process.env.WEBSCRIPT_PATH || '/script', (req, res) => {
   console.log(`Command "${command}" launched at ${date.toString()} !`);
 
   res.status(200).json({
-    message: 'Command executed!'
+    message: `Command "${command}" executed!`
   });
 });
 
