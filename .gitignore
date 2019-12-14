@@ -1,4 +1,4 @@
 node_modules
 .env
 repositories.json
-projects.json
+commands.json

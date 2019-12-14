@@ -5,7 +5,7 @@
 ## Features
 
 Se contente de réceptionner le colis (payload) via les git webhooks puis d'effectuer la livraison, en lançant un `git pull` sur les différents répertoires dédiés aux projets.
-Permet également de mettre à jour par action manuelle différents projets sur différents serveurs, couramment ceux de production.
+Permet également de lancer n'importe quel script bash quelconque.
 
 ## Setup
 
@@ -31,13 +31,12 @@ Il est tout a fait possible de configurer pour chaque projet un ou plusieurs ré
 }
 ```
 
-### Autodeploy via action manuelle
+### Exécution d'un script via POST
 
 Configurer les variables d'environnements suivants :
 
-* WEBPULL_PATH : Chemin HTTP pour la demande de mise à jour, sur /prod par défaut.
-* PULL_KEY : Clé de protection à transmettre dans la requête POST de demande de mise à jour.
-* SSH_KEY : Clé SSH privée de l'utilisateur courant.
+* WEBSCRIPT_PATH : Chemin HTTP pour la demande lancement du script, sur /script par défaut.
+* SCRIPT_KEY : Clé de protection à transmettre dans la requête POST.
 
 Voici le format de body à utiliser dans l'appel POST vers le endpoint :
 
@@ -48,25 +47,10 @@ Voici le format de body à utiliser dans l'appel POST vers le endpoint :
 }
 ```
 
-Le git pull s'effectuera sur l'ensemble des serveurs "nodes" indiqués pour chque projet.
-Pour configurer la liste des serveurs par projet, créer un fichier `servers.json` à la racine. Un format d'example du fichier :
+La liste des commandes disponibles doit être listé dans un fichier `commands.json` au format suivant :
 
 ```json
 {
-  "nomprojet": {
-    // Utilisateur pour la connection SSH
-    "username": "useweb",
-    // Liste des serveurs "node" à mettre à jour
-    "servers": ["laforet-prod-web1.useweb.net", "laforet-prod-web2.useweb.net"],
-    // Liste des répertoires à mettre à jour
-    "dirs": [
-      "/var/www/laforet-back",
-      "/var/www/laforet-front"
-    ],
-    // Scripts de déploiement
-    "scripts": [
-      "my-script"
-    ]
-  }
+  "nomcommande": "my-script"
 }
 ```
