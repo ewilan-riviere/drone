@@ -71,10 +71,10 @@ app.post(process.env.WEBSCRIPT_PATH || '/script', (req, res) => {
   childprocess.execSync(command);
 
   const date = new Date();
-  console.log(`Command "${command}" launched at ${date.toString()} !`);
+  console.log(`Command ${command} launched at ${date.toString()} !`);
 
   res.status(200).json({
-    message: `Command "${command}" executed!`
+    message: `Command ${command} executed!`
   });
 });
 
