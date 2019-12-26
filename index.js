@@ -1,7 +1,6 @@
 require('dotenv').config();
 const slugify = require('slugify');
 const fs = require('fs');
-const Client = require('ssh2').Client;
 
 const port = parseInt(process.env.PORT || '3000', 10);
 
