@@ -1,6 +1,6 @@
 # Useweb Drone
 
-> Outil de déploiement de code.
+> Outil de déploiement de code par [**adr1enbe4udou1n**](https://github.com/adr1enbe4udou1n)
 
 ## Features
 
