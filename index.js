@@ -12,8 +12,6 @@ let express = require("express"),
   path = require("path"),
   shell = require("shelljs");
 
-shell.exec("./pre-deploy.sh");
-
 app.use(bodyParser.json());
 
 app.post(process.env.WEBHOOK_PATH || "/deploy", (req, res) => {
