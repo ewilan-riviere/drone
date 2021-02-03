@@ -25,6 +25,10 @@ Update `pre-deploy.sh` if you need any pre-deploy methods
 # pm2 stop application
 ```
 
+```bash
+sudo chmod 775 pre-deploy.sh 
+```
+
 ## Features
 
 Se contente de réceptionner le colis (payload) via les git webhooks puis d'effectuer la livraison, en lançant un `git pull` sur les différents répertoires dédiés aux projets.
