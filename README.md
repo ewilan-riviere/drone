@@ -4,6 +4,7 @@
 
 ```bash
 cp pre-deploy.sh.example pre-deploy.sh
+cp post-deploy.sh.example post-deploy.sh
 cp repositories.json.example repositories.json
 ```
 
@@ -26,7 +27,7 @@ Update `pre-deploy.sh` if you need any pre-deploy methods
 ```
 
 ```bash
-sudo chmod 775 pre-deploy.sh 
+sudo chmod 775 pre-deploy.sh ; sudo chmod 775 post-deploy.sh 
 ```
 
 ## Features
