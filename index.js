@@ -1,32 +1,35 @@
-require('dotenv').config();
-const slugify = require('slugify');
-const fs = require('fs');
+require("dotenv").config();
+const slugify = require("slugify");
+const fs = require("fs");
 
-const port = parseInt(process.env.PORT || '3000', 10);
+const port = parseInt(process.env.PORT || "3000", 10);
 
-let express = require('express'),
-  http = require('http'),
+let express = require("express"),
+  http = require("http"),
   app = express(),
-  bodyParser = require('body-parser'),
-  childprocess = require('child_process'),
-  path = require('path');
+  bodyParser = require("body-parser"),
+  childprocess = require("child_process"),
+  path = require("path"),
+  shell = require("shelljs");
+
+shell.exec("./pre-deploy.sh");
 
 app.use(bodyParser.json());
 
-app.post(process.env.WEBHOOK_PATH || '/deploy', (req, res) => {
+app.post(process.env.WEBHOOK_PATH || "/deploy", (req, res) => {
   if (!req.body || !req.body.repository || !req.body.repository.name) {
     return res.status(400).json({
-      message: 'Invalid request!'
+      message: "Invalid request!",
     });
   }
 
   let name = slugify(req.body.repository.name, {
-    lower: true
+    lower: true,
   });
 
   let dirs = [name];
 
-  let repositories = JSON.parse(fs.readFileSync('repositories.json'));
+  let repositories = JSON.parse(fs.readFileSync("repositories.json"));
   if (repositories[name]) {
     dirs = repositories[name];
   }
@@ -41,29 +44,29 @@ app.post(process.env.WEBHOOK_PATH || '/deploy', (req, res) => {
   });
 
   res.status(200).json({
-    message: 'Git Hook received!'
+    message: "Git Hook received!",
   });
 });
 
-app.post(process.env.WEBSCRIPT_PATH || '/script', (req, res) => {
+app.post(process.env.WEBSCRIPT_PATH || "/script", (req, res) => {
   if (!req.body || !req.body.name || !req.body.key) {
     return res.status(400).json({
-      message: 'Invalid request!'
+      message: "Invalid request!",
     });
   }
 
   if (req.body.key !== process.env.SCRIPT_KEY) {
     return res.status(400).json({
-      message: 'Invalid key!'
+      message: "Invalid key!",
     });
   }
 
-  let commands = JSON.parse(fs.readFileSync('commands.json'));
-  let command = commands[req.body.name]
+  let commands = JSON.parse(fs.readFileSync("commands.json"));
+  let command = commands[req.body.name];
 
   if (!command) {
     return res.status(400).json({
-      message: 'Invalid script!'
+      message: "Invalid script!",
     });
   }
 
@@ -73,7 +76,7 @@ app.post(process.env.WEBSCRIPT_PATH || '/script', (req, res) => {
   console.log(`Command ${command} launched at ${date.toString()} !`);
 
   res.status(200).json({
-    message: `Command ${command} executed!`
+    message: `Command ${command} executed!`,
   });
 });
 
