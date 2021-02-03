@@ -2,6 +2,29 @@
 
 > Outil de déploiement de code par [**adr1enbe4udou1n**](https://github.com/adr1enbe4udou1n)
 
+```bash
+cp pre-deploy.sh.example pre-deploy.sh
+cp repositories.json.example repositories.json
+```
+
+Update in `repositories.json` with any local repository minimum
+
+```json
+{
+  "remote-repo": [
+    "local-repo"
+  ]
+}
+```
+
+Update `pre-deploy.sh` if you need any pre-deploy methods
+
+```bash
+# ...
+
+# pm2 stop application
+```
+
 ## Features
 
 Se contente de réceptionner le colis (payload) via les git webhooks puis d'effectuer la livraison, en lançant un `git pull` sur les différents répertoires dédiés aux projets.
