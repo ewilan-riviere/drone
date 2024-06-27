@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import type { H3Event } from 'h3'
 import { createError, readBody } from 'h3'
 import type { GithubPayload, GitlabPayload } from '@/types'
@@ -27,7 +28,33 @@ export default async (event: H3Event) => {
   console.log(body.repository.name)
   console.log(origin)
 
+  await getRepositoriesList()
+
   return {
     message: 'Deploy',
   }
+}
+
+/**
+ * Get the list of repositories at root of repository.
+ */
+async function getRepositoriesList() {
+  const rootPath = process.cwd()
+  const filePath = `${rootPath}/repositories.json`
+  const isExists = checkFileExists(filePath)
+
+  console.log(`File exists: ${isExists} at ${filePath}`)
+}
+
+async function checkFileExists(path: string): Promise<boolean> {
+  let isExists = false
+  fs.access(path, fs.constants.F_OK, (err) => {
+    if (err) {
+      isExists = false
+    }
+
+    isExists = true
+  })
+
+  return isExists
 }
