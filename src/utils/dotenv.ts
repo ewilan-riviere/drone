@@ -1,6 +1,7 @@
 import 'dotenv/config'
 
 export interface IDotenv {
+  ENV: 'development' | 'production' | 'test'
   PORT: number
   WEBHOOK_ENDPOINT: string
   WEBSCRIPT_ENDPOINT: string
@@ -14,6 +15,7 @@ export class Dotenv {
     port = Number(port)
 
     return {
+      ENV: process.env.ENV as 'development' | 'production' | 'test',
       PORT: port,
       WEBHOOK_ENDPOINT: process.env.WEBHOOK_ENDPOINT ?? '/deploy',
       WEBSCRIPT_ENDPOINT: process.env.WEBSCRIPT_ENDPOINT ?? '/script',
