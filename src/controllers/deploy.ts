@@ -1,17 +1,6 @@
 import type { H3Event } from 'h3'
 import { readBody } from 'h3'
-
-interface GitPayload {
-  ref: string
-  repository: {
-    name: string
-    full_name: string
-  }
-  pusher: {
-    name: string
-  }
-
-}
+import type { GitPayload } from '@/types'
 
 export default async (event: H3Event) => {
   const body = await readBody<GitPayload | undefined>(event)
@@ -21,7 +10,7 @@ export default async (event: H3Event) => {
     }
   }
 
-  console.log(body.pusher.name)
+  console.log(body)
 
   return {
     message: 'Deploy',
