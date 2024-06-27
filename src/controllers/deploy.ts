@@ -10,11 +10,14 @@ export default async (event: H3Event) => {
     }
   }
 
-  const originalUrl = event.node.req.originalUrl
   const host = event.headers.get('host')
-  console.log(originalUrl)
   console.log(host)
   console.log(body.repository.name)
+
+  if (event.node.req.url) {
+    const requestUrl = new URL(event.node.req.url)
+    console.log(requestUrl)
+  }
 
   return {
     message: 'Deploy',
