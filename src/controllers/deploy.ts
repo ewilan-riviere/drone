@@ -24,6 +24,7 @@ export default async (event: H3Event) => {
     origin = 'gitlab'
   }
 
+  console.log(body)
   console.log(body.repository.name)
   console.log(origin)
 
