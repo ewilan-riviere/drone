@@ -50,6 +50,7 @@ function checkFileExists(path: string): boolean {
   let isExists = false
   fs.access(path, fs.constants.F_OK, (err) => {
     if (err) {
+      console.log(err)
       isExists = false
     }
 
