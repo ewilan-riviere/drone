@@ -10,9 +10,9 @@ export default async (event: H3Event) => {
     }
   }
 
-  // console.log(body)
+  const host = event.headers.get('host')
+  console.log(host)
   console.log(body.repository.name)
-  console.log(event.headers)
 
   return {
     message: 'Deploy',
