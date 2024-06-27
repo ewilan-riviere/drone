@@ -4,3 +4,4 @@ repositories.json
 commands.json
 pre-deploy.sh
 post-deploy.sh
+dist
