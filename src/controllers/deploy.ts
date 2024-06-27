@@ -10,7 +10,7 @@ export default async (event: H3Event) => {
     }
   }
 
-  console.log(body)
+  // console.log(body)
   console.log(body.repository.name)
   console.log(event.headers)
 
