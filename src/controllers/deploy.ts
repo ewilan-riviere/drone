@@ -41,7 +41,7 @@ export default async (event: H3Event) => {
 async function getRepositoriesList() {
   const rootPath = process.cwd()
   const filePath = `${rootPath}/repositories.json`
-  const isExists = checkFileExists(filePath)
+  const isExists = await checkFileExists(filePath)
 
   console.log(`File exists: ${isExists} at ${filePath}`)
 
@@ -49,18 +49,15 @@ async function getRepositoriesList() {
   console.log(contents)
 }
 
-function checkFileExists(path: string): boolean {
-  let isExists = false
-  fs.access(path, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.log(err)
-      isExists = false
-    }
+async function checkFileExists(path: string): Promise<boolean> {
+  try {
+    await fs.promises.access(path, fs.constants.F_OK)
 
-    isExists = true
-  })
-
-  return isExists
+    return true
+  }
+  catch (err) {
+    return false
+  }
 }
 
 async function getFileContent(path: string) {
