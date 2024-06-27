@@ -10,20 +10,10 @@ export default async (event: H3Event) => {
     }
   }
 
-  const host = event.headers.get('host')
-  console.log(host)
   console.log(body.repository.name)
-  console.log(event.headers)
 
-  if (event.node.req.url) {
-    const requestUrl = new URL(event.node.req.url)
-    console.log(requestUrl)
-  }
-
-  const referer = event.headers.get('referer')
-  const referrer = event.headers.get('referrer')
-  console.log(referer)
-  console.log(referrer)
+  const userAgent = event.headers.get('user-agent')
+  console.log(userAgent)
 
   return {
     message: 'Deploy',
