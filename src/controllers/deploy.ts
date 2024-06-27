@@ -44,6 +44,9 @@ async function getRepositoriesList() {
   const isExists = checkFileExists(filePath)
 
   console.log(`File exists: ${isExists} at ${filePath}`)
+
+  const contents = await getFileContent(filePath)
+  console.log(contents)
 }
 
 function checkFileExists(path: string): boolean {
@@ -58,4 +61,8 @@ function checkFileExists(path: string): boolean {
   })
 
   return isExists
+}
+
+async function getFileContent(path: string) {
+  return await fs.promises.readFile(path, 'utf-8')
 }
