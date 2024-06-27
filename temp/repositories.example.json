@@ -1,0 +1,8 @@
+{
+  "remote-repo": [
+    {
+      "path": "/path/to/local/repository",
+      "branch": "main"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import type { H3Event } from 'h3'
 import { createError, readBody } from 'h3'
-import type { GithubPayload, GitlabPayload } from '@/types'
+import type { GithubPayload, GitlabPayload, RepositoryList } from '@/types'
 
 export default async (event: H3Event) => {
   const body = await readBody<GithubPayload | GitlabPayload | undefined>(event)
@@ -29,7 +29,7 @@ export default async (event: H3Event) => {
   console.log(origin)
 
   const repositories = await getRepositoriesList()
-  if (repositories.length === 0) {
+  if (repositories === undefined) {
     throw createError({
       status: 500,
       statusMessage: 'No repositories found',
@@ -49,13 +49,13 @@ export default async (event: H3Event) => {
 /**
  * Get the list of repositories at root of repository.
  */
-async function getRepositoriesList(): Promise<string[]> {
+async function getRepositoriesList(): Promise<RepositoryList | undefined> {
   const rootPath = process.cwd()
   const filePath = `${rootPath}/repositories.json`
   const isExists = await checkFileExists(filePath)
 
   if (!isExists) {
-    return []
+    return undefined
   }
 
   const contents = await getFileContent(filePath)
