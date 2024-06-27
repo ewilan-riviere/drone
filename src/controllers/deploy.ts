@@ -29,6 +29,7 @@ export default async (event: H3Event) => {
   }
 
   console.log(body.repository.name)
+  console.log(userAgentL)
   console.log(origin)
 
   return {
