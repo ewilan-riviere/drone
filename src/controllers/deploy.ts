@@ -42,7 +42,6 @@ async function getRepositoriesList() {
   const rootPath = process.cwd()
   const filePath = `${rootPath}/repositories.json`
   const isExists = await checkFileExists(filePath)
-
   console.log(`File exists: ${isExists} at ${filePath}`)
 
   const contents = await getFileContent(filePath)
