@@ -46,7 +46,7 @@ async function getRepositoriesList() {
   console.log(`File exists: ${isExists} at ${filePath}`)
 }
 
-async function checkFileExists(path: string): Promise<boolean> {
+function checkFileExists(path: string): boolean {
   let isExists = false
   fs.access(path, fs.constants.F_OK, (err) => {
     if (err) {
