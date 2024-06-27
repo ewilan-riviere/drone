@@ -20,6 +20,11 @@ export default async (event: H3Event) => {
     console.log(requestUrl)
   }
 
+  const referer = event.headers.get('referer')
+  const referrer = event.headers.get('referrer')
+  console.log(referer)
+  console.log(referrer)
+
   return {
     message: 'Deploy',
   }
