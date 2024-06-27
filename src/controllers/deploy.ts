@@ -10,10 +10,26 @@ export default async (event: H3Event) => {
     }
   }
 
-  console.log(body.repository.name)
-
   const userAgent = event.headers.get('user-agent')
-  console.log(userAgent)
+  const userAgentL = userAgent?.toLowerCase()
+  let origin: string
+
+  switch (userAgentL) {
+    case userAgentL?.includes('github'):
+      origin = 'github'
+      break
+
+    case userAgentL?.includes('gitlab'):
+      origin = 'gitlab'
+      break
+
+    default:
+      origin = 'unknown'
+      break
+  }
+
+  console.log(body.repository.name)
+  console.log(origin)
 
   return {
     message: 'Deploy',
