@@ -12,24 +12,16 @@ export default async (event: H3Event) => {
 
   const userAgent = event.headers.get('user-agent')
   const userAgentL = userAgent?.toLowerCase()
-  let origin: string
+  let origin = 'unknown'
 
-  switch (userAgentL) {
-    case userAgentL?.includes('github'):
-      origin = 'github'
-      break
-
-    case userAgentL?.includes('gitlab'):
-      origin = 'gitlab'
-      break
-
-    default:
-      origin = 'unknown'
-      break
+  if (userAgentL?.includes('github')) {
+    origin = 'github'
+  }
+  else if (userAgentL?.includes('gitlab')) {
+    origin = 'gitlab'
   }
 
   console.log(body.repository.name)
-  console.log(userAgentL)
   console.log(origin)
 
   return {
