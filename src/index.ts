@@ -1,12 +1,3 @@
-// import { createApp, createRouter, defineEventHandler } from 'h3'
-// import { deploy, root, script } from './controllers'
-
-// export const app = createApp()
-
-// app.listen(3000, () => {
-//   console.log('Server is running on http://localhost:3000')
-// })
-
 import { createServer } from 'node:http'
 import { createApp, createRouter, defineEventHandler, toNodeListener } from 'h3'
 import { consola } from 'consola'

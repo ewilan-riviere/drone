@@ -9,7 +9,6 @@ export default async (event: H3Event) => {
     throw createError({
       status: 400,
       statusMessage: 'Bad Request',
-      message: 'Invalid body',
       data: !body ? 'No body' : !body.repository ? 'No repository' : 'No repository name',
     })
   }
@@ -28,30 +27,48 @@ export default async (event: H3Event) => {
   console.log(body.repository.name)
   console.log(origin)
 
-  await getRepositoriesList()
+  const repositories = await getRepositoriesList()
+  if (repositories.length === 0) {
+    throw createError({
+      status: 500,
+      statusMessage: 'No repositories found',
+      data: 'No repositories found, check if repositories.json exists at root of project.',
+    })
+  }
+
+  console.log(repositories)
 
   return {
-    message: 'Deploy',
+    message: 'Git Hook received!',
+    repository: body.repository.name,
+    origin,
   }
 }
 
 /**
  * Get the list of repositories at root of repository.
  */
-async function getRepositoriesList() {
+async function getRepositoriesList(): Promise<string[]> {
   const rootPath = process.cwd()
   const filePath = `${rootPath}/repositories.json`
   const isExists = await checkFileExists(filePath)
-  console.log(`File exists: ${isExists} at ${filePath}`)
+
+  if (!isExists) {
+    return []
+  }
 
   const contents = await getFileContent(filePath)
-  console.log(contents)
+  const json = JSON.parse(contents)
+
+  return json
 }
 
+/**
+ * Check if file exists.
+ */
 async function checkFileExists(path: string): Promise<boolean> {
   try {
     await fs.promises.access(path, fs.constants.F_OK)
-
     return true
   }
   catch (err) {
@@ -59,6 +76,9 @@ async function checkFileExists(path: string): Promise<boolean> {
   }
 }
 
+/**
+ * Get file content.
+ */
 async function getFileContent(path: string) {
   return await fs.promises.readFile(path, 'utf-8')
 }
