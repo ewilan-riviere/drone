@@ -1,9 +1,9 @@
 import type { H3Event } from 'h3'
 import { readBody } from 'h3'
-import type { GitPayload } from '@/types'
+import type { GithubPayload, GitlabPayload } from '@/types'
 
 export default async (event: H3Event) => {
-  const body = await readBody<GitPayload | undefined>(event)
+  const body = await readBody<GithubPayload | GitlabPayload | undefined>(event)
   if (!body) {
     return {
       message: 'No body',
@@ -11,6 +11,8 @@ export default async (event: H3Event) => {
   }
 
   console.log(body)
+  console.log(body.repository.name)
+  console.log(event.headers)
 
   return {
     message: 'Deploy',
