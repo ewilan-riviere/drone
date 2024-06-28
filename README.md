@@ -5,21 +5,22 @@
 [![node][node-version-src]][node-version-href]
 [![License][license-src]][license-href]
 
-
 Deployment tool for servers.
 
 ## Installation
 
-Install the dependencies:
+You can install Drone with [Docker](https://www.docker.com/).
 
 ```bash
-pnpm install
+docker compose up -d
 ```
 
 ## Usage
 
+To deploy an application, you need to create a configuration file in the `config` directory.
+
 ```bash
-pnpm start
+/deploy
 ```
 
 ## Credits
