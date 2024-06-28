@@ -34,13 +34,14 @@ export default async (event: H3Event) => {
   for (const path of paths) {
     console.log(path)
     const command = `cd ${path} && git pull`
+    console.log(command)
     try {
       const { stdout, stderr } = await childprocess.exec(command)
-      console.log(stdout)
-      console.log(stderr)
+      console.log(`stdout: ${stdout}`)
+      console.log(`stderr: ${stderr}`)
     }
     catch (error) {
-      console.log(error)
+      console.log(`error: ${error}`)
     }
   }
 
