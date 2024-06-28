@@ -31,10 +31,10 @@ export default async (event: H3Event) => {
     const command = `cd ${path} && git pull`
     const output = await runCommand(command)
     if (output) {
-      Logger.create(`Git hook for '${forge.getRepositoryFullName()}' (${forge.getType()?.toString()}) to '${path}' and output: ${output}`, 'info')
+      Logger.create(`Success for git hook for '${forge.getRepositoryFullName()}' (${forge.getType()?.toString()}) to '${path}' and output: ${output}`, 'info')
     }
     else {
-      Logger.create(`Git hook for '${forge.getRepositoryFullName()}' (${forge.getType()?.toString()}) to '${path}' failed`, 'error')
+      Logger.create(`Failed for git hook for '${forge.getRepositoryFullName()}' (${forge.getType()?.toString()}) to '${path}'`, 'error')
     }
   }
 
