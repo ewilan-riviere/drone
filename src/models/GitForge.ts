@@ -86,15 +86,15 @@ export class GitForge {
   }
 
   private findRepository(): string[] | undefined {
-    if (!this.repositories) {
+    if (!this.repositories || !this.repositoryFullName) {
       return undefined
     }
 
-    if (!Object.hasOwn(this.repositories, this.repositoryOwner as string)) {
+    if (!Object.hasOwn(this.repositories, this.repositoryFullName)) {
       return undefined
     }
 
-    let paths = this.repositories[this.repositoryOwner as string]
+    let paths = this.repositories[this.repositoryFullName]
 
     if (!Array.isArray(paths)) {
       paths = [paths]
