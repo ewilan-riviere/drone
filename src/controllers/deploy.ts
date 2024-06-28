@@ -5,6 +5,8 @@ import type { GithubPayload, GitlabPayload, RepositoryList } from '@/types'
 
 export default async (event: H3Event) => {
   const body = await readBody<GithubPayload | GitlabPayload | undefined>(event)
+  console.log(body)
+
   if (!body || !body.repository || !body.repository.name) {
     throw createError({
       status: 400,
@@ -24,9 +26,13 @@ export default async (event: H3Event) => {
     origin = 'gitlab'
   }
 
-  console.log(body)
-  console.log(body.repository.name)
-  console.log(origin)
+  if (origin === 'unknown') {
+    throw createError({
+      status: 400,
+      statusMessage: 'Bad Request',
+      data: 'Unknown origin',
+    })
+  }
 
   const repositories = await getRepositoriesList()
   if (repositories === undefined) {
@@ -37,13 +43,43 @@ export default async (event: H3Event) => {
     })
   }
 
+  console.log(body.repository.name)
+  console.log(origin)
   console.log(repositories)
+
+  let fullName: string | undefined
+
+  if (isGithub(body)) {
+    fullName = body.repository.full_name // `ewilan-riviere/drone-test`
+  }
+  else if (isGitlab(body)) {
+    fullName = body.project.path_with_namespace // `ewilan-riviere/drone-test`
+  }
+
+  if (!fullName || !fullName.includes('/')) {
+    throw createError({
+      status: 400,
+      statusMessage: 'Bad Request',
+      data: 'No full name',
+    })
+  }
+
+  const repositoryName = fullName.split('/')[1]
+  console.log(repositoryName)
 
   return {
     message: 'Git Hook received!',
     repository: body.repository.name,
     origin,
   }
+}
+
+function isGithub(body: GithubPayload | GitlabPayload): body is GithubPayload {
+  return (<GithubPayload>body).repository.id !== undefined
+}
+
+function isGitlab(body: GithubPayload | GitlabPayload): body is GitlabPayload {
+  return (<GitlabPayload>body).project !== undefined
 }
 
 /**
