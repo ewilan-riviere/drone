@@ -23,7 +23,7 @@ export default async (event: H3Event) => {
   const forge = await GitForge.create(body, event.headers)
 
   if (forge.getPaths() === undefined) {
-    await Logger.create(`${forge.getRepositoryFullName()}: no paths found`, 'error')
+    await Logger.create(`${forge.getRepositoryFullName()}: not founed into 'repositories.json'`, 'error')
   }
 
   const paths = forge.getPaths() as string[]
