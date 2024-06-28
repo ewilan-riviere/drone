@@ -30,8 +30,10 @@ export default async (event: H3Event) => {
     await Logger.create(`${forge.getRepositoryFullName()}: no paths found`, 'error')
   }
 
+  console.warn(forge.getPaths())
   forge.getPaths()?.forEach((path) => {
     const projectDir = path.normalize(path)
+    console.warn(projectDir)
     childprocess.exec(`cd ${projectDir} && git pull`)
     Logger.create(`Pulled changes for ${forge.getRepositoryFullName()} in ${projectDir}`, 'info')
   })
