@@ -23,24 +23,26 @@ export default async (event: H3Event) => {
   const forge = await GitForge.create(body, event.headers)
 
   if (forge.getPaths() === undefined) {
-    await Logger.create(`${forge.getRepositoryFullName()}: not founed into 'repositories.json'`, 'error')
+    await Logger.create(`${forge.getRepositoryFullName()}: not founded into 'repositories.json'`, 'error')
   }
 
   const paths = forge.getPaths() as string[]
   for (const path of paths) {
     const command = `cd ${path} && git pull`
     const output = await runCommand(command)
+
+    const msg = `git hook for '${forge.getRepositoryFullName()}' (${forge.getType()?.toString()}) to '${path}'`
     if (output) {
-      Logger.create(`Success for git hook for '${forge.getRepositoryFullName()}' (${forge.getType()?.toString()}) to '${path}' and output: ${output}`, 'info')
+      Logger.create(`Success for ${msg} and output: ${output}`, 'info')
     }
     else {
-      Logger.create(`Failed for git hook for '${forge.getRepositoryFullName()}' (${forge.getType()?.toString()}) to '${path}'`, 'error')
+      Logger.create(`Failed for ${msg}`, 'error')
     }
   }
 
   return {
     message: 'Git Hook received!',
-    repository: body.repository.name,
-    origin,
+    repository: forge.getRepositoryFullName(),
+    type: forge.getType()?.toString(),
   }
 }
