@@ -17,12 +17,13 @@ export default async (event: H3Event) => {
 
   await Logger.createLogFile()
   const forge = await GitForge.create(body, event.headers)
-  console.log('')
   console.log(forge.getType())
   console.log(forge.getRepositoryFullName())
   console.log(forge.getRepositoryOwner())
   console.log(forge.getRepositoryName())
+  console.log(forge.getRepositories())
   console.log(forge.getPaths())
+  console.log('')
 
   return {
     message: 'Git Hook received!',
