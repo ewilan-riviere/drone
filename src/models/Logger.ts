@@ -28,7 +28,12 @@ export class Logger {
     }
     log.concat('')
 
-    await fs.promises.appendFile(this.logPath(), `${log}\n`)
+    try {
+      await fs.promises.appendFile(this.logPath(), `${log}\n`)
+    }
+    catch (error) {
+      console.error(`Error writing to log file: ${error}`)
+    }
   }
 
   private async sizeOfLogFile(): Promise<number> {
