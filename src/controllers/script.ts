@@ -3,13 +3,6 @@ import { keyIsValid } from '@/utils/security'
 import { runCommand } from '@/utils/command'
 
 export default async (event: H3Event) => {
-  if (event.headers.get('authorization') === null) {
-    throw createError({
-      status: 400,
-      statusMessage: 'Invalid request!',
-    })
-  }
-
   const isValid = keyIsValid(event.headers)
   if (!isValid) {
     throw createError({
