@@ -17,6 +17,7 @@ export default async (event: H3Event) => {
 
   await Logger.createLogFile()
   const forge = await GitForge.create(body, event.headers)
+  console.log('')
   console.log(forge.getType())
   console.log(forge.getRepositoryFullName())
   console.log(forge.getRepositoryOwner())
