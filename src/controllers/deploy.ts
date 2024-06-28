@@ -34,6 +34,7 @@ export default async (event: H3Event) => {
     console.log(path)
     const command = `cd ${path} && git pull`
     await runCommand(command)
+    console.log(command)
   }
 
   console.log('pull complete')
