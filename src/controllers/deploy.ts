@@ -30,7 +30,6 @@ export default async (event: H3Event) => {
     await Logger.create(`${forge.getRepositoryFullName()}: no paths found`, 'error')
   }
 
-  console.warn(forge.getPaths())
   const paths = forge.getPaths() as string[]
   for (const path of paths) {
     console.log(path)
@@ -38,10 +37,10 @@ export default async (event: H3Event) => {
     try {
       const { stdout, stderr } = await childprocess.exec(command)
       console.log(stdout)
-      console.error(stderr)
+      console.log(stderr)
     }
     catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
 
