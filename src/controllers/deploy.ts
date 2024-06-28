@@ -31,12 +31,19 @@ export default async (event: H3Event) => {
   }
 
   console.warn(forge.getPaths())
-  forge.getPaths()?.forEach((path) => {
-    const projectDir = path.normalize(path)
-    console.warn(projectDir)
-    childprocess.exec(`cd ${projectDir} && git pull`)
-    Logger.create(`Pulled changes for ${forge.getRepositoryFullName()} in ${projectDir}`, 'info')
-  })
+  const paths = forge.getPaths() as string[]
+  for (const path of paths) {
+    console.log(path)
+    const command = `cd ${path} && git pull`
+    try {
+      const { stdout, stderr } = await childprocess.exec(command)
+      console.log(stdout)
+      console.error(stderr)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
 
   return {
     message: 'Git Hook received!',
