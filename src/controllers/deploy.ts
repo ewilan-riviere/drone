@@ -2,6 +2,7 @@ import type { H3Event } from 'h3'
 import { createError, readBody } from 'h3'
 import type { Payload } from '@/types'
 import { GitForge } from '@/models/GitForge'
+import { Logger } from '@/models/Logger'
 
 export default async (event: H3Event) => {
   const body = await readBody<Payload | undefined>(event)
@@ -14,6 +15,7 @@ export default async (event: H3Event) => {
     })
   }
 
+  await Logger.createLogFile()
   const forge = await GitForge.create(body, event.headers)
   console.log(forge.getType())
   console.log(forge.getRepositoryFullName())

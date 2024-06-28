@@ -14,11 +14,36 @@ export class Logger {
     const self = new Logger(message, level, new Date(), data)
     const size = await self.sizeOfLogFile()
     if (size > 1024 * 1024) {
-      await fs.promises.truncate(self.logPath(), 0)
+      await self.purgeLogFile()
     }
     await self.write()
 
     return self
+  }
+
+  public static async createLogFile(): Promise<void> {
+    const self = new Logger('', 'info', new Date())
+    if (await self.checkFileExists(self.logPath())) {
+      return
+    }
+
+    try {
+      await fs.promises.writeFile(self.logPath(), '')
+      await self.purgeLogFile()
+    }
+    catch (error) {
+      console.error(`Error creating log file: ${error}`)
+    }
+  }
+
+  private async checkFileExists(path: string): Promise<boolean> {
+    try {
+      await fs.promises.access(path, fs.constants.F_OK)
+      return true
+    }
+    catch (err) {
+      return false
+    }
   }
 
   private async write(): Promise<void> {
@@ -34,6 +59,10 @@ export class Logger {
     catch (error) {
       console.error(`Error writing to log file: ${error}`)
     }
+  }
+
+  private async purgeLogFile(): Promise<void> {
+    await fs.promises.truncate(this.logPath(), 0)
   }
 
   private async sizeOfLogFile(): Promise<number> {
