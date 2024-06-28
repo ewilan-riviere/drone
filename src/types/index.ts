@@ -3,13 +3,8 @@ import type { GitlabPayload } from './gitlab'
 import type { BitbucketPayload } from './bitbucket'
 import type { GiteaPayload } from './gitea'
 
-interface Repository {
-  path: string
-  branch?: string | 'any'
-}
-
 interface RepositoryList {
-  [key: string]: Repository[] | Repository
+  [key: string]: string[] | string
 }
 
 type Payload = GithubPayload | GitlabPayload | BitbucketPayload | GiteaPayload
@@ -29,7 +24,6 @@ export {
   GitlabPayload,
   BitbucketPayload,
   GiteaPayload,
-  Repository,
   RepositoryList,
   Payload,
   ForgeType,

@@ -14,12 +14,12 @@ export class GitForge {
     protected repositoryOwner?: string,
     protected repositoryName?: string,
     protected repositories?: RepositoryList,
+    protected paths?: string[],
   ) {
   }
 
   public static async create(body: Payload, headers: Headers): Promise<GitForge> {
     const self = new GitForge(body, headers)
-    console.log(headers)
 
     self.parseBody()
     self.parseUserAgent()
@@ -30,17 +30,21 @@ export class GitForge {
     }
 
     self.repositories = await self.getRepositoriesList()
-    if (self.repositoryFullName) {
-      if (!self.repositoryFullName.includes('/')) {
-        self.createError('Repository name must be in the format `owner/repo`.')
-
-        return self
-      }
-
-      const [owner, name] = self.repositoryFullName.split('/')
-      self.repositoryOwner = owner
-      self.repositoryName = name
+    if (!self.repositoryFullName) {
+      return self
     }
+
+    if (!self.repositoryFullName.includes('/')) {
+      self.createError('Repository name must be in the format `owner/repo`.')
+
+      return self
+    }
+
+    const [owner, name] = self.repositoryFullName.split('/')
+    self.repositoryOwner = owner
+    self.repositoryName = name
+
+    self.paths = self.findRepository()
 
     return self
   }
@@ -77,8 +81,30 @@ export class GitForge {
     return this.repositories
   }
 
+  public getPaths(): string[] | undefined {
+    return this.paths
+  }
+
+  private findRepository(): string[] | undefined {
+    if (!this.repositories) {
+      return undefined
+    }
+
+    if (!Object.hasOwn(this.repositories, this.repositoryOwner as string)) {
+      return undefined
+    }
+
+    let paths = this.repositories[this.repositoryOwner as string]
+
+    if (!Array.isArray(paths)) {
+      paths = [paths]
+    }
+
+    return paths
+  }
+
   private createError(statusMessage: string, data?: string, status = 500): Error {
-    Logger.create(statusMessage, 'error')
+    Logger.create(statusMessage, 'error', this.headers.get('user-agent') || '')
     throw createError({
       status,
       statusMessage,

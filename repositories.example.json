@@ -1,19 +1,8 @@
 {
-  "git-repository-name": [
-    {
-      "path": "/path/to/local/repository",
-      "branch": "main"
-    },
-    {
-      "path": "/path/to/local/repository-develop",
-      "branch": "develop"
-    }
+  "owner/git-repository-name": [
+    "/path/to/local/repository",
+    "/path/to/local/repository-develop"
   ],
-  "another-git-repository-name": {
-    "path": "/path/to/another/local/repository",
-    "branch": "develop"
-  },
-  "another-another-git-repository-name": {
-    "path": "/path/to/another/another/local/repository"
-  }
+  "another-owner/another-git-repository-name": "/path/to/another/local/repository",
+  "alternative-owner/alternative-git-repository-name": "/path/to/alternative/local/repository"
 }
