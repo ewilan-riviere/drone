@@ -3,6 +3,8 @@ import 'dotenv/config'
 export interface IDotenv {
   ENV: 'development' | 'production' | 'test'
   PORT: number
+  HOST: string
+  HTTPS: boolean
   WEBHOOK_ENDPOINT: string
   WEBSCRIPT_ENDPOINT: string
   SECRET_KEY: string
@@ -17,6 +19,8 @@ export class Dotenv {
     return {
       ENV: process.env.ENV as 'development' | 'production' | 'test',
       PORT: port,
+      HOST: process.env.HOST ?? 'localhost',
+      HTTPS: process.env.HTTPS === 'true',
       WEBHOOK_ENDPOINT: process.env.WEBHOOK_ENDPOINT ?? '/deploy',
       WEBSCRIPT_ENDPOINT: process.env.WEBSCRIPT_ENDPOINT ?? '/script',
       SECRET_KEY: process.env.SECRET_KEY ?? '',

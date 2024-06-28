@@ -29,7 +29,8 @@ let env = colors.yellow(dotenv.ENV)
 if (dotenv.ENV === 'production')
   env = colors.red(dotenv.ENV)
 
-const baseURL = `http://localhost:${dotenv.PORT}`
+const prefix = dotenv.HTTPS ? 'https' : 'http'
+const baseURL = `${prefix}://${dotenv.HOST}:${dotenv.PORT}`
 consola.success(`Local server: ${colors.cyanBright(baseURL)}`)
 consola.success(`Environment: ${env}`)
 consola.success(`Port: ${dotenv.PORT}`)
