@@ -5,7 +5,7 @@ export interface IDotenv {
   PORT: number
   WEBHOOK_ENDPOINT: string
   WEBSCRIPT_ENDPOINT: string
-  SCRIPT_KEY: string
+  SECRET_KEY: string
   PROJECTS_ROOT?: string
 }
 
@@ -19,7 +19,7 @@ export class Dotenv {
       PORT: port,
       WEBHOOK_ENDPOINT: process.env.WEBHOOK_ENDPOINT ?? '/deploy',
       WEBSCRIPT_ENDPOINT: process.env.WEBSCRIPT_ENDPOINT ?? '/script',
-      SCRIPT_KEY: process.env.SCRIPT_KEY ?? '',
+      SECRET_KEY: process.env.SECRET_KEY ?? '',
       PROJECTS_ROOT: process.env.PROJECTS_ROOT ?? '/var/www/',
     }
   }
