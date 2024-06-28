@@ -16,8 +16,8 @@ const router = createRouter()
 app.use(router)
 
 router.get('/', defineEventHandler(() => root()))
-router.post('/deploy', defineEventHandler(event => deploy(event)))
-router.post('/script', defineEventHandler(event => script(event)))
+router.post(dotenv.WEBHOOK_ENDPOINT, defineEventHandler(event => deploy(event)))
+router.post(dotenv.WEBSCRIPT_ENDPOINT, defineEventHandler(event => script(event)))
 
 createServer(toNodeListener(app)).listen(dotenv.PORT)
 
