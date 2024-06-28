@@ -1,10 +1,10 @@
 import fs from 'node:fs'
 import type { H3Event } from 'h3'
 import { createError, readBody } from 'h3'
-import type { GithubPayload, GitlabPayload, RepositoryList } from '@/types'
+import type { BitbucketPayload, GithubPayload, GitlabPayload, Payload, RepositoryList } from '@/types'
 
 export default async (event: H3Event) => {
-  const body = await readBody<GithubPayload | GitlabPayload | undefined>(event)
+  const body = await readBody<Payload | undefined>(event)
   console.log(body)
 
   if (!body || !body.repository || !body.repository.name) {
@@ -18,6 +18,7 @@ export default async (event: H3Event) => {
   const userAgent = event.headers.get('user-agent')
   const userAgentL = userAgent?.toLowerCase()
   let origin = 'unknown'
+  console.log(userAgentL)
 
   if (userAgentL?.includes('github')) {
     origin = 'github'
@@ -55,6 +56,9 @@ export default async (event: H3Event) => {
   else if (isGitlab(body)) {
     fullName = body.project.path_with_namespace // `ewilan-riviere/drone-test`
   }
+  else if (isBitbucket(body)) {
+    fullName = body.repository.full_name // `ewilan-riviere/drone-test`
+  }
 
   if (!fullName || !fullName.includes('/')) {
     throw createError({
@@ -74,12 +78,16 @@ export default async (event: H3Event) => {
   }
 }
 
-function isGithub(body: GithubPayload | GitlabPayload): body is GithubPayload {
+function isGithub(body: Payload): body is GithubPayload {
   return (<GithubPayload>body).repository.id !== undefined
 }
 
-function isGitlab(body: GithubPayload | GitlabPayload): body is GitlabPayload {
+function isGitlab(body: Payload): body is GitlabPayload {
   return (<GitlabPayload>body).project !== undefined
+}
+
+function isBitbucket(body: Payload): body is GitlabPayload {
+  return (<BitbucketPayload>body).push.changes !== undefined
 }
 
 /**
