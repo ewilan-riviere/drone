@@ -1,17 +1,21 @@
 import { exec } from 'node:child_process'
 import { promisify } from 'node:util'
+import { Logger } from '@/models/Logger'
 
 const execAsync = promisify(exec)
 
-export async function runCommand(command: string): Promise<void> {
+export async function runCommand(command: string): Promise<string | undefined> {
   try {
     const { stdout, stderr } = await execAsync(command)
-    console.log('Output:', stdout)
     if (stderr) {
-      console.log('Error:', stderr)
+      Logger.log(`Error executing command: ${stderr}`)
     }
+
+    return stdout
   }
   catch (error) {
-    console.log('Execution error:', error)
+    Logger.log(`Error executing command: ${error}`)
+
+    return undefined
   }
 }

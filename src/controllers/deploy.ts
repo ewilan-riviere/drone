@@ -31,14 +31,11 @@ export default async (event: H3Event) => {
 
   const paths = forge.getPaths() as string[]
   for (const path of paths) {
-    console.log(path)
     const command = `cd ${path} && git pull`
-    await runCommand(command)
-    console.log(command)
+    const output = await runCommand(command)
+    Logger.log(`Git hook for ${forge.getRepositoryFullName()} to ${path} and output: ${output}`)
   }
 
-  console.log('pull complete')
-  await runCommand('ls')
   console.log('')
 
   return {

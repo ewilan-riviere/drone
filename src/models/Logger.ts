@@ -10,6 +10,11 @@ export class Logger {
   ) {
   }
 
+  public static log(message: string): void {
+    // eslint-disable-next-line no-console
+    console.log(message)
+  }
+
   public static async create(message: string, level: LogLevel, data?: string): Promise<Logger> {
     const self = new Logger(message, level, new Date(), data)
     const size = await self.sizeOfLogFile()
