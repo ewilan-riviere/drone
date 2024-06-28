@@ -60,7 +60,7 @@ export class Logger {
 
     try {
       await fs.promises.appendFile(this.logPath(), `${log}\n`)
-      console.warn(log)
+      Logger.log(log)
     }
     catch (error) {
       console.error(`Error writing to log file: ${error}`)
