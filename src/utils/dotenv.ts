@@ -5,10 +5,7 @@ export interface IDotenv {
   PORT: number
   HOST: string
   HTTPS: boolean
-  WEBHOOK_ENDPOINT: string
-  WEBSCRIPT_ENDPOINT: string
-  SECRET_KEY: string
-  PROJECTS_ROOT?: string
+  ENDPOINT: string
 }
 
 export class Dotenv {
@@ -21,10 +18,7 @@ export class Dotenv {
       PORT: port,
       HOST: process.env.HOST ?? 'localhost',
       HTTPS: process.env.HTTPS === 'true',
-      WEBHOOK_ENDPOINT: process.env.WEBHOOK_ENDPOINT ?? '/deploy',
-      WEBSCRIPT_ENDPOINT: process.env.WEBSCRIPT_ENDPOINT ?? '/script',
-      SECRET_KEY: process.env.SECRET_KEY ?? '',
-      PROJECTS_ROOT: process.env.PROJECTS_ROOT ?? '/var/www/',
+      ENDPOINT: process.env.ENDPOINT ?? '/deploy',
     }
   }
 }

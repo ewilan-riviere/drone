@@ -3,7 +3,7 @@ import { createApp, createRouter, defineEventHandler, toNodeListener } from 'h3'
 import { consola } from 'consola'
 import { colors } from 'consola/utils'
 import { Dotenv } from './utils/dotenv'
-import { deploy, root, script } from './controllers'
+import { deploy, root } from './controllers'
 
 const dotenv = Dotenv.load()
 
@@ -16,12 +16,7 @@ const router = createRouter()
 app.use(router)
 
 router.get('/', defineEventHandler(() => root()))
-if (dotenv.WEBHOOK_ENDPOINT) {
-  router.post(dotenv.WEBHOOK_ENDPOINT, defineEventHandler(event => deploy(event)))
-}
-if (dotenv.WEBSCRIPT_ENDPOINT) {
-  router.post(dotenv.WEBSCRIPT_ENDPOINT, defineEventHandler(event => script(event)))
-}
+router.post(dotenv.ENDPOINT, defineEventHandler(event => deploy(event)))
 
 createServer(toNodeListener(app)).listen(dotenv.PORT)
 
