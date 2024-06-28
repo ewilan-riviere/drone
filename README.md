@@ -15,6 +15,15 @@ You can install Drone with [Docker](https://www.docker.com/).
 docker compose up -d
 ```
 
+### Docker image
+
+Build and run the docker image
+
+```bash
+docker build -t drone-app:latest .
+docker run -it -p 3000:3000 drone-app:latest
+```
+
 ## Usage
 
 To deploy an application, you need to create a configuration file in the `config` directory.

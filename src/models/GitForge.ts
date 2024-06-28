@@ -3,6 +3,7 @@ import { createError } from 'h3'
 import { Logger } from './Logger'
 import type { BitbucketPayload, GiteaPayload, GithubPayload, GitlabPayload, Payload, RepositoryList } from '@/types'
 import { ForgeType } from '@/types'
+import { getFile, rootPath } from '@/utils/files'
 
 export class GitForge {
   protected constructor(
@@ -29,7 +30,7 @@ export class GitForge {
       return self
     }
 
-    self.repositories = await self.getRepositoriesList()
+    self.repositories = await getFile<RepositoryList>(`${rootPath}/repositories.json`)
     if (!self.repositoryFullName) {
       return self
     }
@@ -177,43 +178,5 @@ export class GitForge {
 
   private isGitea(body: Payload): body is GiteaPayload {
     return (<GiteaPayload>body).secret !== undefined
-  }
-
-  /**
-   * Get the list of repositories at root of repository.
-   */
-  private async getRepositoriesList(): Promise<RepositoryList | undefined> {
-    const rootPath = process.cwd()
-    const filePath = `${rootPath}/repositories.json`
-    const isExists = await this.checkFileExists(filePath)
-
-    if (!isExists) {
-      return undefined
-    }
-
-    const contents = await this.getFileContent(filePath)
-    const json = JSON.parse(contents)
-
-    return json
-  }
-
-  /**
-   * Check if file exists.
-   */
-  private async checkFileExists(path: string): Promise<boolean> {
-    try {
-      await fs.promises.access(path, fs.constants.F_OK)
-      return true
-    }
-    catch (err) {
-      return false
-    }
-  }
-
-  /**
-   * Get file content.
-   */
-  private async getFileContent(path: string) {
-    return await fs.promises.readFile(path, 'utf-8')
   }
 }
