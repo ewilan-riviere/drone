@@ -26,7 +26,7 @@ export default async (event: H3Event) => {
   console.log(forge.getPaths())
   console.log('')
 
-  if (forge.getPaths() !== undefined) {
+  if (forge.getPaths() === undefined) {
     await Logger.create(`${forge.getRepositoryFullName()}: no paths found`, 'error')
   }
 
