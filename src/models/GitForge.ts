@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import { createError } from 'h3'
+import { Logger } from './Logger'
 import type { BitbucketPayload, GiteaPayload, GithubPayload, GitlabPayload, Payload, RepositoryList } from '@/types'
 import { ForgeType } from '@/types'
 
@@ -18,6 +19,8 @@ export class GitForge {
 
   public static async create(body: Payload, headers: Headers): Promise<GitForge> {
     const self = new GitForge(body, headers)
+    console.log(headers)
+
     self.parseBody()
     self.parseUserAgent()
     self.tryToFindRepositoryFullName()
@@ -75,6 +78,7 @@ export class GitForge {
   }
 
   private createError(statusMessage: string, data?: string, status = 500): Error {
+    Logger.create(statusMessage, 'error')
     throw createError({
       status,
       statusMessage,
@@ -148,7 +152,7 @@ export class GitForge {
   }
 
   private isGithub(body: Payload): body is GithubPayload {
-    return (<GithubPayload>body).repository.id !== undefined
+    return (<GithubPayload>body).repository?.id !== undefined
   }
 
   private isGitlab(body: Payload): body is GitlabPayload {
@@ -156,7 +160,7 @@ export class GitForge {
   }
 
   private isBitbucket(body: Payload): body is GitlabPayload {
-    return (<BitbucketPayload>body).push.changes !== undefined
+    return (<BitbucketPayload>body).push?.changes !== undefined
   }
 
   private isGitea(body: Payload): body is GiteaPayload {

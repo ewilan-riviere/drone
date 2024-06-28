@@ -1,5 +1,5 @@
-import { GithubPayload } from './github'
-import { GitlabPayload } from './gitlab'
+import type { GithubPayload } from './github'
+import type { GitlabPayload } from './gitlab'
 import type { BitbucketPayload } from './bitbucket'
 import type { GiteaPayload } from './gitea'
 
@@ -13,6 +13,8 @@ interface RepositoryList {
 }
 
 type Payload = GithubPayload | GitlabPayload | BitbucketPayload | GiteaPayload
+
+type LogLevel = 'info' | 'warn' | 'error'
 
 enum ForgeType {
   Github = 'github',
@@ -31,4 +33,5 @@ export {
   RepositoryList,
   Payload,
   ForgeType,
+  LogLevel,
 }

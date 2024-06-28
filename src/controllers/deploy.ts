@@ -5,7 +5,6 @@ import { GitForge } from '@/models/GitForge'
 
 export default async (event: H3Event) => {
   const body = await readBody<Payload | undefined>(event)
-  console.log(body)
 
   if (!body) {
     throw createError({
