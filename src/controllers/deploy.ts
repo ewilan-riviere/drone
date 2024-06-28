@@ -1,3 +1,4 @@
+import childprocess from 'node:child_process'
 import type { H3Event } from 'h3'
 import { createError, readBody } from 'h3'
 import type { Payload } from '@/types'
@@ -24,6 +25,16 @@ export default async (event: H3Event) => {
   console.log(forge.getRepositories())
   console.log(forge.getPaths())
   console.log('')
+
+  if (forge.getPaths() !== undefined) {
+    await Logger.create(`${forge.getRepositoryFullName()}: no paths found`, 'error')
+  }
+
+  forge.getPaths()?.forEach((path) => {
+    const projectDir = path.normalize(path)
+    childprocess.exec(`cd ${projectDir} && git pull`)
+    Logger.create(`Pulled changes for ${forge.getRepositoryFullName()} in ${projectDir}`, 'info')
+  })
 
   return {
     message: 'Git Hook received!',
