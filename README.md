@@ -197,7 +197,7 @@ pnpm test
 [h3-version-href]: https://github.com/unjs/h3
 [license-src]: https://img.shields.io/github/license/kiwilan/feedrender.svg?style=flat&colorA=18181B&colorB=F0DB4F
 [license-href]: https://github.com/kiwilan/feedrender/blob/main/LICENSE
-[node-version-src]: https://img.shields.io/badge/dynamic/json?label=Node.js&query=engines[%27node%27]&url=https://gitlab.com/ewilan-riviere/drone/-/raw/main/README.md&style=flat-square&colorA=18181B&colorB=F0DB4F
+[node-version-src]: https://img.shields.io/badge/dynamic/json?label=Node.js&query=engines[%27node%27]&url=https://gitlab.com/ewilan-riviere/drone/-/raw/main/package.json&style=flat-square&colorA=18181B&colorB=F0DB4F
 [node-version-href]: https://nodejs.org/en/
 [tests-src]: https://img.shields.io/github/actions/workflow/status/kiwilan/feedrender/run-tests.yml?branch=main&label=tests&style=flat&colorA=18181B
 [tests-href]: https://github.com/kiwilan/feedrender/actions/workflows/run-tests.yml
