@@ -4,7 +4,7 @@ import { Logger } from '@/models/Logger'
 
 const execAsync = promisify(exec)
 
-export async function runCommand(command: string): Promise<string | undefined> {
+export async function runCommand(command: string): Promise<string | false> {
   try {
     const { stdout, stderr } = await execAsync(command)
     if (stderr) {
@@ -16,6 +16,6 @@ export async function runCommand(command: string): Promise<string | undefined> {
   catch (error) {
     Logger.log(`Error executing command: ${error}`)
 
-    return undefined
+    return false
   }
 }

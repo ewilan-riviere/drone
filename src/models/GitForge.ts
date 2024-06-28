@@ -160,21 +160,7 @@ export class GitForge {
   }
 
   private parseUserAgent(): void {
-    const userAgent = this.headers.get('user-agent')
-    const userAgentL = userAgent?.toLowerCase()
-
-    if (userAgentL?.includes('github')) {
-      this.userAgent = 'github'
-    }
-    else if (userAgentL?.includes('gitlab')) {
-      this.userAgent = 'gitlab'
-    }
-    else if (userAgentL?.includes('bitbucket')) {
-      this.userAgent = 'bitbucket'
-    }
-    else if (userAgentL?.includes('gitea')) {
-      this.userAgent = 'gitea'
-    }
+    this.userAgent = this.headers.get('user-agent') || ''
   }
 
   private isGithub(body: Payload): body is GithubPayload {
