@@ -44,6 +44,8 @@ export default async (event: H3Event) => {
     }
   }
 
+  console.log('pull complete')
+
   return {
     message: 'Git Hook received!',
     repository: body.repository.name,
