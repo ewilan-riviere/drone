@@ -32,6 +32,9 @@ importers:
       tsup:
         specifier: ^8.1.0
         version: 8.1.0(postcss@8.4.39)(typescript@5.5.2)
+      tsx:
+        specifier: ^4.15.7
+        version: 4.16.0
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^2.21.1
@@ -42,9 +45,6 @@ importers:
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
-      tsx:
-        specifier: ^4.15.7
-        version: 4.16.0
       typescript:
         specifier: ^5.5.2
         version: 5.5.2

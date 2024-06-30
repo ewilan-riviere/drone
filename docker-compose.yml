@@ -1,14 +1,36 @@
 ---
 version: '3'
 services:
+  # app:
+  #   container_name: drone
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '${APP_PORT}:${PORT}'
+  #   env_file: .env
+  #   restart: always
+  #   volumes:
+  #     - ./repositories:/usr/src/app/repositories
   app:
-    container_name: drone
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - '${APP_PORT}:${PORT}'
+    container_name: drone
     env_file: .env
     restart: always
+    ports:
+      - '${APP_PORT}:${PORT}'
     volumes:
       - ./repositories:/usr/src/app/repositories
+      - .env:/usr/src/app/.env
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app

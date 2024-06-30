@@ -57,6 +57,12 @@ Run the docker container with docker compose
 docker compose up -d
 ```
 
+You can also run the docker container with docker
+
+```bash
+docker run -it -d --name drone-app -p 3000:3000 --env-file .env drone-app:latest
+```
+
 ## Configuration
 
 You can add your repositories into `repositories/repositories.json` file.
