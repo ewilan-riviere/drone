@@ -33,20 +33,16 @@ export async function verifySignature(payload: string, signature?: string, forge
   console.log(`signature: ${signature}`)
   console.log(`forge: ${forge}`)
 
-  if (dotenv.SECRET_KEY === undefined && signature === undefined) {
-    return true
-  }
-
   if (dotenv.SECRET_KEY === undefined) {
     return true
   }
 
-  if (forge === ForgeType.Gitlab) {
-    return dotenv.SECRET_KEY === signature
+  if (signature === undefined) {
+    return false
   }
 
-  if (!signature) {
-    return false
+  if (forge === ForgeType.Gitlab) {
+    return dotenv.SECRET_KEY === signature
   }
 
   const parts = signature.split('=')
