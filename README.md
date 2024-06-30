@@ -95,7 +95,7 @@ You can set a value as an array to deploy multiple instances of the same reposit
 
 ## Usage
 
-When you push to your repository, the webhook will trigger the deployment. This options is available for GitHub, GitLab, Bitbucket and Gitea.
+When you push to your repository, the webhook will trigger the deployment. This option is available for GitHub, GitLab, Bitbucket and Gitea.
 
 ## Configure webhooks on forges
 
