@@ -1,11 +1,8 @@
-import { getFile, rootPath } from '@/utils/files'
+import { getRepositoriesFile } from '@/utils/files'
 
 export default async () => {
-  const repositories = await getFile<any>(`${rootPath}/config/repositories.json`)
-
   return {
     message: 'Drone',
     description: 'A simple webhook server for deploying projects',
-    repositories: repositories || [],
   }
 }

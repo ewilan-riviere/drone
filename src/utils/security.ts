@@ -1,5 +1,5 @@
+import { ForgeType } from '../types'
 import { Dotenv } from './dotenv'
-import { ForgeType } from '@/types'
 
 export function keyIsValid(headers: Headers): boolean {
   const dotenv = Dotenv.load()

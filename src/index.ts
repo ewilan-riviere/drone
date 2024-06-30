@@ -3,7 +3,7 @@ import { createApp, createRouter, defineEventHandler, toNodeListener } from 'h3'
 import { consola } from 'consola'
 import { colors } from 'consola/utils'
 import { Dotenv } from './utils/dotenv'
-import { deploy, root } from './controllers'
+import { deploy, repositories, root } from './controllers'
 
 const dotenv = Dotenv.load()
 
@@ -16,6 +16,9 @@ const router = createRouter()
 app.use(router)
 
 router.get('/', defineEventHandler(() => root()))
+if (!dotenv.IS_PRODUCTION) {
+  router.get('/repositories', defineEventHandler(() => repositories()))
+}
 router.post(dotenv.ENDPOINT, defineEventHandler(event => deploy(event)))
 
 createServer(toNodeListener(app)).listen(dotenv.PORT)

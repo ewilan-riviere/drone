@@ -1,7 +1,7 @@
 import { createError } from 'h3'
 import type { BitbucketPayload, GiteaPayload, GithubPayload, GitlabPayload, Payload, RepositoryList } from '../types'
 import { ForgeType } from '../types'
-import { getFile, rootPath } from '../utils/files'
+import { getFile, getRepositoriesFile, rootPath } from '../utils/files'
 import { Logger } from './Logger'
 
 export class GitForge {
@@ -30,7 +30,7 @@ export class GitForge {
       return self
     }
 
-    self.repositories = await getFile<RepositoryList>(`${rootPath}/config/repositories.json`)
+    self.repositories = await getRepositoriesFile()
     if (!self.repositoryFullName) {
       return self
     }

@@ -1,6 +1,13 @@
 import fs from 'node:fs'
+import type { RepositoryList } from '@/types'
 
 export const rootPath = process.cwd()
+
+export async function getRepositoriesFile(): Promise<RepositoryList | undefined> {
+  const repositories = await getFile<RepositoryList>(`${rootPath}/config/repositories.json`)
+
+  return repositories
+}
 
 /**
  * Get the list of repositories at root of repository.

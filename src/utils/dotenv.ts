@@ -2,6 +2,7 @@ import 'dotenv/config'
 
 export interface IDotenv {
   ENV: 'development' | 'production' | 'test'
+  IS_PRODUCTION: boolean
   PORT: number
   HOST: string
   HTTPS: boolean
@@ -21,6 +22,7 @@ export class Dotenv {
 
     return {
       ENV: process.env.ENV as 'development' | 'production' | 'test',
+      IS_PRODUCTION: process.env.ENV === 'production',
       PORT: port,
       HOST: process.env.HOST ?? 'localhost',
       HTTPS: process.env.HTTPS === 'true',

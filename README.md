@@ -54,7 +54,16 @@ APP_PORT=3000
 Run the docker container with docker compose
 
 ```bash
-docker compose up -d
+docker compose up --build -d
+```
+
+### Update
+
+To update the application, you can pull the latest changes from the repository and rebuild the docker image.
+
+```bash
+git pull
+docker compose up --build -d
 ```
 
 ## Configuration
