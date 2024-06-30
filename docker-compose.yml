@@ -7,8 +7,6 @@ services:
     container_name: drone
     env_file: .env
     restart: always
-    ports:
-      - '${APP_PORT}:${PORT}'
     volumes:
       - ./repositories:/usr/src/app/repositories
       - .env:/usr/src/app/.env

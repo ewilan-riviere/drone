@@ -4,7 +4,6 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 RUN apk update && apk upgrade
-RUN apk add git
 
 COPY . /usr/src/app/
 RUN rm -rf node_modules
@@ -14,7 +13,5 @@ RUN /root/.local/share/pnpm/pnpm install
 RUN /root/.local/share/pnpm/pnpm run build
 
 ENV HOST=0.0.0.0
-
-EXPOSE 3000
 
 CMD ["pm2-runtime", "start", "./dist/index.js"]
