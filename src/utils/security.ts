@@ -29,6 +29,10 @@ const encoder = new TextEncoder()
 
 export async function verifySignature(payload: string, signature?: string, forge?: ForgeType): Promise<boolean> {
   const dotenv = Dotenv.load()
+  console.log(`dotenv.SECRET_KEY: ${dotenv.SECRET_KEY}`)
+  console.log(`signature: ${signature}`)
+  console.log(`forge: ${forge}`)
+
   if (dotenv.SECRET_KEY === undefined && signature === undefined) {
     return true
   }
