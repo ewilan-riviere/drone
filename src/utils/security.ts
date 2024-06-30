@@ -29,12 +29,16 @@ const encoder = new TextEncoder()
 
 export async function verifySignature(payload: string, signature?: string, forge?: ForgeType): Promise<boolean> {
   const dotenv = Dotenv.load()
-  if (dotenv.SECRET_KEY === undefined || !signature) {
+  if (dotenv.SECRET_KEY === undefined && signature === undefined) {
     return true
   }
 
   if (forge === ForgeType.Gitlab) {
     return dotenv.SECRET_KEY === signature
+  }
+
+  if (!signature) {
+    return false
   }
 
   const parts = signature.split('=')

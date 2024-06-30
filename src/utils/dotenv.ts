@@ -20,7 +20,7 @@ export class Dotenv {
       HOST: process.env.HOST ?? 'localhost',
       HTTPS: process.env.HTTPS === 'true',
       ENDPOINT: process.env.ENDPOINT ?? '/deploy',
-      SECRET_KEY: process.env.SECRET_KEY,
+      SECRET_KEY: process.env.SECRET_KEY ?? undefined,
     }
   }
 }

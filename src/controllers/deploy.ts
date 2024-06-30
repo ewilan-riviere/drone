@@ -27,6 +27,15 @@ export default async (event: H3Event) => {
   const isValid = await verifySignature(JSON.stringify(body), forge.getSignature(), forge.getType())
   console.log(isValid)
 
+  if (!isValid) {
+    Logger.create('Invalid signature', 'error', userAgent || '')
+    throw createError({
+      status: 401,
+      statusMessage: 'Unauthorized',
+      data: 'Invalid signature',
+    })
+  }
+
   if (forge.getPaths() === undefined) {
     await Logger.create(`${forge.getRepositoryFullName()}: not founded into 'repositories.json'`, 'error')
   }
