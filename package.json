@@ -3,7 +3,7 @@
   "type": "module",
   "version": "2.0.0",
   "private": true,
-  "description": "Deployment tool for servers.",
+  "description": "Auto-deployment tool for servers.",
   "author": "Adrien Beaudouin, Ewilan Rivière",
   "license": "MIT",
   "homepage": "https://gitlab.com/ewilan-riviere/drone",

@@ -5,7 +5,7 @@
 [![node][node-version-src]][node-version-href]
 [![License][license-src]][license-href]
 
-Deployment tool for servers.
+Auto-deployment tool for servers.
 
 Currently support GitHub, GitLab, Bitbucket and Gitea.
 
