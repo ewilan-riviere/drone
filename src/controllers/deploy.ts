@@ -13,7 +13,7 @@ export default async (event: H3Event) => {
   console.log(event.headers)
 
   const dotenv = Dotenv.load()
-  const isValid = await verifySignature(JSON.stringify(body), event.headers.get('X-Hub-Signature'), dotenv.SECRET_KEY)
+  const isValid = await verifySignature(JSON.stringify(body), event.headers.get('x-hub-signature-256'), dotenv.SECRET_KEY)
   console.log(isValid)
 
   await Logger.createLogFile()
