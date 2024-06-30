@@ -8,7 +8,7 @@ import { runCommand } from '@/utils/command'
 export default async (event: H3Event) => {
   const body = await readBody<Payload | undefined>(event)
   const userAgent = event.headers.get('User-Agent')
-  console.log(body)
+  console.log(event.headers)
 
   await Logger.createLogFile()
 
