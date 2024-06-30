@@ -90,6 +90,14 @@ server {
 }
 ```
 
+### Logs
+
+You can see the logs of the application with `pm2`.
+
+```bash
+pm2 logs
+```
+
 ## Configuration
 
 You can add your repositories into `config/repositories.json` file.
