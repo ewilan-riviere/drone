@@ -14,6 +14,7 @@ export class GitForge {
     protected repositoryOwner?: string,
     protected repositoryName?: string,
     protected repositories?: RepositoryList,
+    protected signature?: string,
     protected paths?: string[],
   ) {
   }
@@ -81,6 +82,10 @@ export class GitForge {
     return this.repositories
   }
 
+  public getSignature(): string | undefined {
+    return this.signature
+  }
+
   public getPaths(): string[] | undefined {
     return this.paths
   }
@@ -144,18 +149,22 @@ export class GitForge {
     if (this.isGithub(this.body)) {
       this.type = ForgeType.Github
       this.repositoryFullName = this.body.repository.full_name // `ewilan-riviere/drone-test`
+      this.signature = this.headers.get('x-hub-signature-256') || undefined
     }
     else if (this.isGitlab(this.body)) {
       this.type = ForgeType.Gitlab
       this.repositoryFullName = this.body.project.path_with_namespace // `ewilan-riviere/drone-test`
+      this.signature = this.headers.get('x-gitlab-token') || undefined
     }
     else if (this.isBitbucket(this.body)) {
       this.type = ForgeType.Bitbucket
       this.repositoryFullName = this.body.repository.full_name // `ewilan-riviere/drone-test`
+      this.signature = this.headers.get('x-hub-signature') || undefined
     }
     else if (this.isGitea(this.body)) {
       this.type = ForgeType.Gitea
       this.repositoryFullName = this.body.repository.full_name // `ewilan-riviere/drone-test`
+      this.signature = this.headers.get('x-gitea-signature') || undefined
     }
   }
 

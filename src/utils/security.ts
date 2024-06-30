@@ -26,17 +26,18 @@ export function keyIsValid(headers: Headers): boolean {
 
 const encoder = new TextEncoder()
 
-export async function verifySignature(payload: string, header?: string | null, secret?: string): Promise<boolean> {
-  if (secret === undefined || secret === '' || header === undefined || header === '' || header === null) {
+export async function verifySignature(payload: string, signature?: string): Promise<boolean> {
+  const dotenv = Dotenv.load()
+  if (dotenv.SECRET_KEY === undefined || !signature) {
     return true
   }
 
-  const parts = header.split('=')
+  const parts = signature.split('=')
   const sigHex = parts[1]
 
   const algorithm = { name: 'HMAC', hash: { name: 'SHA-256' } }
 
-  const keyBytes = encoder.encode(secret)
+  const keyBytes = encoder.encode(dotenv.SECRET_KEY)
   const extractable = false
   const key = await crypto.subtle.importKey(
     'raw',

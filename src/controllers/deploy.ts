@@ -5,16 +5,10 @@ import { GitForge } from '@/models/GitForge'
 import { Logger } from '@/models/Logger'
 import { runCommand } from '@/utils/command'
 import { verifySignature } from '@/utils/security'
-import { Dotenv } from '@/utils/dotenv'
 
 export default async (event: H3Event) => {
   const body = await readBody<Payload | undefined>(event)
   const userAgent = event.headers.get('User-Agent')
-  console.log(event.headers)
-
-  const dotenv = Dotenv.load()
-  const isValid = await verifySignature(JSON.stringify(body), event.headers.get('x-hub-signature-256'), dotenv.SECRET_KEY)
-  console.log(isValid)
 
   await Logger.createLogFile()
 
@@ -27,8 +21,11 @@ export default async (event: H3Event) => {
     })
   }
 
+  console.log(event.headers)
   Logger.create(`Received event from ${userAgent}`, 'info')
   const forge = await GitForge.create(body, event.headers)
+  const isValid = await verifySignature(JSON.stringify(body), forge.getSignature())
+  console.log(isValid)
 
   if (forge.getPaths() === undefined) {
     await Logger.create(`${forge.getRepositoryFullName()}: not founded into 'repositories.json'`, 'error')
