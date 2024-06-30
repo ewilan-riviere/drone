@@ -1,4 +1,3 @@
-import fs from 'node:fs'
 import { createError } from 'h3'
 import { Logger } from './Logger'
 import type { BitbucketPayload, GiteaPayload, GithubPayload, GitlabPayload, Payload, RepositoryList } from '@/types'
@@ -30,7 +29,7 @@ export class GitForge {
       return self
     }
 
-    self.repositories = await getFile<RepositoryList>(`${rootPath}/repositories.json`)
+    self.repositories = await getFile<RepositoryList>(`${rootPath}/repositories/repositories.json`)
     if (!self.repositoryFullName) {
       return self
     }
