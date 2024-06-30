@@ -47,6 +47,7 @@ SECRET_KEY=
 APP_PORT=3000
 ```
 
+- If you change `ENDPOINT`, you have to adapt the webhook configuration of your repository.
 - Change `APP_PORT` if you want to point to another port.
 - You can let `SECRET_KEY` empty if you don't want to use a secret key (for GitLab it's `Secret token`, for GitHub it's `Secret`, for Bitbucket it's `Secret`, for Gitea it's `Secret`). If you set a secret key, you need to set it in the webhook configuration of your repository, otherwise the deployment will not work.
 
@@ -94,11 +95,7 @@ You can set a value as an array to deploy multiple instances of the same reposit
 
 ## Usage
 
-To deploy an application, you need to create a configuration file in the `config` directory.
-
-```bash
-/deploy
-```
+When you push to your repository, the webhook will trigger the deployment. This options is available for GitHub, GitLab, Bitbucket and Gitea.
 
 ## Configure webhooks on forges
 
@@ -106,7 +103,7 @@ To deploy an application, you need to create a configuration file in the `config
 
 You can set a webhook on GitHub by going to the repository settings, then `Webhooks`, then `Add webhook`.
 
-- Payload URL: `https://domain.com/deploy`
+- Payload URL: `https://drone.domain.com/deploy`
 - Content type: `application/json`
 - Secret: your secret key (if you set one)
 - Events: `Just the push event`
@@ -117,7 +114,7 @@ You can set a webhook on GitHub by going to the repository settings, then `Webho
 
 You can set a webhook on GitLab by going to the repository settings, then `Webhooks`, then `Add webhook`.
 
-- URL: `https://domain.com/deploy`
+- URL: `https://drone.domain.com/deploy`
 - Secret token: your secret key (if you set one)
 - Trigger: `Push events` (you can specify branches)
 
@@ -128,7 +125,7 @@ You can set a webhook on GitLab by going to the repository settings, then `Webho
 You can set a webhook on Bitbucket by going to the repository settings, then `Webhooks`, then `Add webhook`.
 
 - Title: `Drone`
-- URL: `https://domain.com/deploy`
+- URL: `https://drone.domain.com/deploy`
 - Secret: your secret key (if you set one)
 - Triggers: `Repository push`
 
