@@ -83,6 +83,6 @@ export class Logger {
       root += '/'
     }
 
-    return `${root}drone.log`
+    return `${root}config/drone.log`
   }
 }
