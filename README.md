@@ -133,7 +133,7 @@ You can set a webhook on Bitbucket by going to the repository settings, then `We
 
 ## Credits
 
-- [`adr1enbe4udou1n/drone`](https://github.com/adr1enbe4udou1n/drone): first version of the project
+- [`adr1enbe4udou1n/drone`](https://github.com/adr1enbe4udou1n/drone): original project
 
 ## License
 
