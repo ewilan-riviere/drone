@@ -92,7 +92,12 @@ server {
 
 ## Configuration
 
-You can add your repositories into `repositories/repositories.json` file.
+You can add your repositories into `config/repositories.json` file.
+
+```bash
+vim config/repositories.json
+```
+The key is the owner and the repository name separated by a slash. The value is the path to the local repository.
 
 ```json
 {
@@ -104,8 +109,6 @@ You can add your repositories into `repositories/repositories.json` file.
   "alternative-owner/alternative-git-repository-name": "/path/to/alternative/local/repository"
 }
 ```
-
-The key is the owner and the repository name separated by a slash. The value is the path to the local repository.
 
 Example for the repository <https://github.com/ewilan-riviere/drone>
 
@@ -176,8 +179,8 @@ You can set a webhook on Bitbucket by going to the repository settings, then `We
 [version-href]: https://github.com/ewilan-riviere/drone/-/tags
 [h3-version-src]: https://img.shields.io/badge/dynamic/json?label=h3&query=dependencies['h3']&url=https://raw.githubusercontent.com/ewilan-riviere/drone/main/package.json&colorA=18181B&colorB=F0DB4F
 [h3-version-href]: https://github.com/unjs/h3
-[license-src]: https://img.shields.io/github/license/ewilan-riviere/drone.svg?style=flat&colorA=18181B&colorB=F0DB4F
-[license-href]: https://raw.githubusercontent.com/ewilan-riviere/drone/main/LICENSE
+[license-src]: https://img.shields.io/github/license/ewilan-riviere/drone.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[license-href]: https://github.com/ewilan-riviere/drone/blob/main/README.md
 [node-version-src]: https://img.shields.io/badge/dynamic/json?label=Node.js&query=engines[%27node%27]&url=https://raw.githubusercontent.com/ewilan-riviere/drone/main/package.json&style=flat-square&colorA=18181B&colorB=F0DB4F
 [node-version-href]: https://nodejs.org/en/
 
