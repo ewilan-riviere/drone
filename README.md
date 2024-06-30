@@ -51,6 +51,14 @@ Run the docker container with docker compose
 docker compose up --build -d
 ```
 
+### Logs
+
+You can see the logs of the application with the following command
+
+```bash
+docker logs drone -f # docker compose logs -f
+```
+
 ### Update
 
 To update the application, you can pull the latest changes from the repository and rebuild the docker image.
@@ -59,6 +67,8 @@ To update the application, you can pull the latest changes from the repository a
 git pull
 docker compose up --build -d
 ```
+
+
 
 ### Deploy
 
