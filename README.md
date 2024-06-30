@@ -7,7 +7,8 @@
 
 Auto-deployment tool for servers.
 
-Currently support GitHub, GitLab, Bitbucket and Gitea.
+> [!NOTE]
+> Currently support GitHub, GitLab, Bitbucket and Gitea.
 
 ## Installation
 
