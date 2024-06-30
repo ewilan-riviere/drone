@@ -24,7 +24,7 @@ export default async (event: H3Event) => {
   console.log(event.headers)
   Logger.create(`Received event from ${userAgent}`, 'info')
   const forge = await GitForge.create(body, event.headers)
-  const isValid = await verifySignature(JSON.stringify(body), forge.getSignature())
+  const isValid = await verifySignature(JSON.stringify(body), forge.getSignature(), forge.getType())
   console.log(isValid)
 
   if (forge.getPaths() === undefined) {

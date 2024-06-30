@@ -1,4 +1,5 @@
 import { Dotenv } from './dotenv'
+import { ForgeType } from '@/types'
 
 export function keyIsValid(headers: Headers): boolean {
   const dotenv = Dotenv.load()
@@ -26,10 +27,14 @@ export function keyIsValid(headers: Headers): boolean {
 
 const encoder = new TextEncoder()
 
-export async function verifySignature(payload: string, signature?: string): Promise<boolean> {
+export async function verifySignature(payload: string, signature?: string, forge?: ForgeType): Promise<boolean> {
   const dotenv = Dotenv.load()
   if (dotenv.SECRET_KEY === undefined || !signature) {
     return true
+  }
+
+  if (forge === ForgeType.Gitlab) {
+    return dotenv.SECRET_KEY === signature
   }
 
   const parts = signature.split('=')
