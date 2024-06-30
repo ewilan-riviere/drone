@@ -6,3 +6,4 @@ pre-deploy.sh
 post-deploy.sh
 dist
 drone.log
+.DS_Store

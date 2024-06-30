@@ -32,6 +32,7 @@ And fill in the environment variables:
 - `HOST`: host of the application
 - `HTTPS`: enable HTTPS
 - `ENDPOINT`: endpoint of deployment
+- `SECRET_KEY`: secret key for the webhook
 - `APP_PORT`: port of the application to deploy (into the server)
 
 Best configuration for production:
@@ -42,10 +43,12 @@ PORT=3000
 HOST=domain.com
 HTTPS=true
 ENDPOINT=/deploy
+SECRET_KEY=
 APP_PORT=3000
 ```
 
-Change `APP_PORT` if you want to point to another port.
+- Change `APP_PORT` if you want to point to another port.
+- You can let `SECRET_KEY` empty if you don't want to use a secret key (for GitLab it's `Secret token`, for GitHub it's `Secret`, for Bitbucket it's `Secret`, for Gitea it's `Secret`). If you set a secret key, you need to set it in the webhook configuration of your repository, otherwise the deployment will not work.
 
 Run the docker container with docker compose
 
@@ -96,6 +99,40 @@ To deploy an application, you need to create a configuration file in the `config
 ```bash
 /deploy
 ```
+
+## Configure webhooks on forges
+
+### GitHub
+
+You can set a webhook on GitHub by going to the repository settings, then `Webhooks`, then `Add webhook`.
+
+- Payload URL: `https://domain.com/deploy`
+- Content type: `application/json`
+- Secret: your secret key (if you set one)
+- Events: `Just the push event`
+
+![github-webhook](./docs/github-webhook.jpg)
+
+### GitLab
+
+You can set a webhook on GitLab by going to the repository settings, then `Webhooks`, then `Add webhook`.
+
+- URL: `https://domain.com/deploy`
+- Secret token: your secret key (if you set one)
+- Trigger: `Push events` (you can specify branches)
+
+![gitlab-webhook](./docs/gitlab-webhook.jpg)
+
+### Bitbucket
+
+You can set a webhook on Bitbucket by going to the repository settings, then `Webhooks`, then `Add webhook`.
+
+- Title: `Drone`
+- URL: `https://domain.com/deploy`
+- Secret: your secret key (if you set one)
+- Triggers: `Repository push`
+
+![bitbucket-webhook](./docs/bitbucket-webhook.jpg)
 
 ## Credits
 
