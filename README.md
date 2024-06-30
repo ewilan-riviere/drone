@@ -11,7 +11,12 @@ Currently support GitHub, GitLab, Bitbucket and Gitea.
 
 ## Installation
 
-You can install Drone with [Docker](https://www.docker.com/).
+You have to install Drone on your server, Docker can't be used because Drone needs to access the host machine.
+
+```bash
+git clone https://github.com/ewilan-riviere/drone.git
+cd drone
+```
 
 Create a `.env` file with the following content
 
@@ -45,36 +50,33 @@ APP_PORT=3000
 - Change `APP_PORT` if you want to point to another port.
 - You can let `SECRET_KEY` empty if you don't want to use a secret key (for GitLab it's `Secret token`, for GitHub it's `Secret`, for Bitbucket it's `Secret`, for Gitea it's `Secret`). If you set a secret key, you need to set it in the webhook configuration of your repository, otherwise the deployment will not work.
 
-Run the docker container with docker compose
+### Build
+
+Here I use [`pnpm`](https://pnpm.io/) as package manager, you can install `pnpm` or use [`npm`](https://www.npmjs.com/) if you prefer.
 
 ```bash
-docker compose up --build -d
+pnpm install
 ```
 
-### Logs
-
-You can see the logs of the application with the following command
+Build the application
 
 ```bash
-docker logs drone -f # docker compose logs -f
+pnpm build
 ```
 
-### Update
+### Serve the application
 
-To update the application, you can pull the latest changes from the repository and rebuild the docker image.
+To keep alive the application, you can use [`pm2`](https://pm2.keymetrics.io/).
 
 ```bash
-git pull
-docker compose up --build -d
+pm2 start ./dist/index.js
 ```
-
-
 
 ### Deploy
 
-Just create a vhost in your web server to point to the container.
+You can use a reverse proxy to serve the application.
 
-Example for Nginx: [nginx.conf](./nginx/example.conf)
+Example for Nginx: [nginx.conf](./docs/nginx.conf)
 
 If you don't use `3000` as port, you have to change it in the configuration file.
 
@@ -105,7 +107,7 @@ You can add your repositories into `repositories/repositories.json` file.
 
 The key is the owner and the repository name separated by a slash. The value is the path to the local repository.
 
-Example for the repository <https://gitlab.com/ewilan-riviere/drone>
+Example for the repository <https://github.com/ewilan-riviere/drone>
 
 ```json
 {
@@ -170,12 +172,12 @@ You can set a webhook on Bitbucket by going to the repository settings, then `We
 
 [MIT](LICENSE)
 
-[version-src]: https://img.shields.io/badge/dynamic/json?label=version&query=version&url=https://gitlab.com/ewilan-riviere/drone/-/raw/main/package.json&colorA=18181B&colorB=F0DB4F
-[version-href]: https://gitlab.com/ewilan-riviere/drone/-/tags
-[h3-version-src]: https://img.shields.io/badge/dynamic/json?label=h3&query=dependencies['h3']&url=https://gitlab.com/ewilan-riviere/drone/-/raw/main/package.json&colorA=18181B&colorB=F0DB4F
+[version-src]: https://img.shields.io/badge/dynamic/json?label=version&query=version&url=https://raw.githubusercontent.com/ewilan-riviere/drone/main/package.json&colorA=18181B&colorB=F0DB4F
+[version-href]: https://github.com/ewilan-riviere/drone/-/tags
+[h3-version-src]: https://img.shields.io/badge/dynamic/json?label=h3&query=dependencies['h3']&url=https://raw.githubusercontent.com/ewilan-riviere/drone/main/package.json&colorA=18181B&colorB=F0DB4F
 [h3-version-href]: https://github.com/unjs/h3
-[license-src]: https://img.shields.io/gitlab/license/ewilan-riviere/drone.svg?style=flat&colorA=18181B&colorB=F0DB4F
-[license-href]: https://gitlab.com/ewilan-riviere/drone/-/raw/main/LICENSE?ref_type=heads
-[node-version-src]: https://img.shields.io/badge/dynamic/json?label=Node.js&query=engines[%27node%27]&url=https://gitlab.com/ewilan-riviere/drone/-/raw/main/package.json&style=flat-square&colorA=18181B&colorB=F0DB4F
+[license-src]: https://img.shields.io/github/license/ewilan-riviere/drone.svg?style=flat&colorA=18181B&colorB=F0DB4F
+[license-href]: https://raw.githubusercontent.com/ewilan-riviere/drone/main/LICENSE
+[node-version-src]: https://img.shields.io/badge/dynamic/json?label=Node.js&query=engines[%27node%27]&url=https://raw.githubusercontent.com/ewilan-riviere/drone/main/package.json&style=flat-square&colorA=18181B&colorB=F0DB4F
 [node-version-href]: https://nodejs.org/en/
 
