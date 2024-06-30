@@ -6,6 +6,7 @@ export interface IDotenv {
   HOST: string
   HTTPS: boolean
   ENDPOINT: string
+  SECRET_KEY?: string
 }
 
 export class Dotenv {
@@ -19,6 +20,7 @@ export class Dotenv {
       HOST: process.env.HOST ?? 'localhost',
       HTTPS: process.env.HTTPS === 'true',
       ENDPOINT: process.env.ENDPOINT ?? '/deploy',
+      SECRET_KEY: process.env.SECRET_KEY,
     }
   }
 }

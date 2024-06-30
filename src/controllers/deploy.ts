@@ -4,11 +4,17 @@ import type { Payload } from '@/types'
 import { GitForge } from '@/models/GitForge'
 import { Logger } from '@/models/Logger'
 import { runCommand } from '@/utils/command'
+import { verifySignature } from '@/utils/security'
+import { Dotenv } from '@/utils/dotenv'
 
 export default async (event: H3Event) => {
   const body = await readBody<Payload | undefined>(event)
   const userAgent = event.headers.get('User-Agent')
   console.log(event.headers)
+
+  const dotenv = Dotenv.load()
+  const isValid = await verifySignature(JSON.stringify(body), event.headers.get('X-Hub-Signature'), dotenv.SECRET_KEY)
+  console.log(isValid)
 
   await Logger.createLogFile()
 

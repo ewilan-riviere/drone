@@ -1,7 +1,7 @@
 import { getFile, rootPath } from '@/utils/files'
 
 export default async () => {
-  const repositories = await getFile<any>(`${rootPath}/repositories/repositories.json`)
+  const repositories = await getFile<any>(`${rootPath}/config/repositories.json`)
 
   return {
     message: 'Drone',

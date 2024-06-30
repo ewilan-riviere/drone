@@ -1,8 +1,8 @@
 import { createError } from 'h3'
+import type { BitbucketPayload, GiteaPayload, GithubPayload, GitlabPayload, Payload, RepositoryList } from '../types'
+import { ForgeType } from '../types'
+import { getFile, rootPath } from '../utils/files'
 import { Logger } from './Logger'
-import type { BitbucketPayload, GiteaPayload, GithubPayload, GitlabPayload, Payload, RepositoryList } from '@/types'
-import { ForgeType } from '@/types'
-import { getFile, rootPath } from '@/utils/files'
 
 export class GitForge {
   protected constructor(
@@ -29,7 +29,7 @@ export class GitForge {
       return self
     }
 
-    self.repositories = await getFile<RepositoryList>(`${rootPath}/repositories/repositories.json`)
+    self.repositories = await getFile<RepositoryList>(`${rootPath}/config/repositories.json`)
     if (!self.repositoryFullName) {
       return self
     }
