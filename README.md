@@ -13,12 +13,6 @@ Currently support GitHub, GitLab, Bitbucket and Gitea.
 
 You can install Drone with [Docker](https://www.docker.com/).
 
-Build the docker image
-
-```bash
-docker build -t drone-app:latest .
-```
-
 Create a `.env` file with the following content
 
 ```bash
