@@ -5,8 +5,6 @@
 [![node][node-version-src]][node-version-href]
 [![License][license-src]][license-href]
 
-test
-
 Auto-deployment tool for servers.
 
 Currently support GitHub, GitLab, Bitbucket and Gitea.
