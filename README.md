@@ -60,6 +60,24 @@ git pull
 docker compose up --build -d
 ```
 
+### Deploy
+
+Just create a vhost in your web server to point to the container.
+
+Example for Nginx: [nginx.conf](./nginx/example.conf)
+
+If you don't use `3000` as port, you have to change it in the configuration file.
+
+```nginx
+server {
+  # ...
+
+  location / {
+    proxy_pass http://127.0.0.1:3000; # Change the port if needed
+  }
+}
+```
+
 ## Configuration
 
 You can add your repositories into `repositories/repositories.json` file.
