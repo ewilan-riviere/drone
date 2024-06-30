@@ -7,21 +7,86 @@
 
 Deployment tool for servers.
 
+Currently support GitHub, GitLab, Bitbucket and Gitea.
+
 ## Installation
 
 You can install Drone with [Docker](https://www.docker.com/).
+
+Build the docker image
+
+```bash
+docker build -t drone-app:latest .
+```
+
+Create a `.env` file with the following content
+
+```bash
+cp .env.example .env
+```
+
+And fill in the environment variables:
+
+- `ENV`: environment of the application (`development`, `production`, `test`)
+- `PORT`: port of the application (into the container)
+- `HOST`: host of the application
+- `HTTPS`: enable HTTPS
+- `ENDPOINT`: endpoint of deployment
+- `APP_PORT`: port of the application to deploy (into the server)
+
+Best configuration for production:
+
+```bash
+ENV=production
+PORT=3000
+HOST=domain.com
+HTTPS=true
+ENDPOINT=/deploy
+APP_PORT=3000
+```
+
+Change `APP_PORT` if you want to point to another port.
+
+Run the docker container with docker compose
 
 ```bash
 docker compose up -d
 ```
 
-### Docker image
+## Configuration
 
-Build and run the docker image
+You can add your repositories into `repositories/repositories.json` file.
 
-```bash
-docker build -t drone-app:latest .
-docker run -it -p 3000:3000 --name drone-app drone-app:latest
+```json
+{
+  "owner/git-repository-name": [
+    "/path/to/local/repository",
+    "/path/to/local/repository-develop"
+  ],
+  "another-owner/another-git-repository-name": "/path/to/another/local/repository",
+  "alternative-owner/alternative-git-repository-name": "/path/to/alternative/local/repository"
+}
+```
+
+The key is the owner and the repository name separated by a slash. The value is the path to the local repository.
+
+Example for the repository <https://gitlab.com/ewilan-riviere/drone>
+
+```json
+{
+  "ewilan-riviere/drone": "/path/to/drone"
+}
+```
+
+You can set a value as an array to deploy multiple instances of the same repository.
+
+```json
+{
+  "ewilan-riviere/drone": [
+    "/path/to/drone",
+    "/path/to/drone-develop"
+  ]
+}
 ```
 
 ## Usage
