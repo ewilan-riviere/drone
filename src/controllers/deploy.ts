@@ -38,6 +38,12 @@ export default async (event: H3Event) => {
 
   if (forge.getPaths() === undefined) {
     await Logger.create(`${forge.getRepositoryFullName()}: not founded into 'repositories.json'`, 'error')
+
+    throw createError({
+      status: 500,
+      statusMessage: 'Repository not found',
+      data: 'You should check your configuration',
+    })
   }
 
   const paths = forge.getPaths() as string[]
