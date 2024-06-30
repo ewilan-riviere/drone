@@ -13,6 +13,7 @@ services:
     volumes:
       - ./repositories:/usr/src/app/repositories
       - .env:/usr/src/app/.env
+      - drone.log:/usr/src/app/drone.log
 
   nginx:
     image: nginx:latest
