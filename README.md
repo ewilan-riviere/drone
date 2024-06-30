@@ -21,7 +21,7 @@ Build and run the docker image
 
 ```bash
 docker build -t drone-app:latest .
-docker run -it -p 3000:3000 drone-app:latest
+docker run -it -p 3000:3000 --name drone-app drone-app:latest
 ```
 
 ## Usage

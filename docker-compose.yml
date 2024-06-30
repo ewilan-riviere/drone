@@ -10,3 +10,5 @@ services:
       - '${APP_PORT}:${PORT}'
     env_file: .env
     restart: always
+    volumes:
+      - ./repositories:/usr/src/app/repositories
