@@ -192,4 +192,3 @@ You can set a webhook on Bitbucket by going to the repository settings, then `We
 [license-href]: https://github.com/ewilan-riviere/drone/blob/main/README.md
 [node-version-src]: https://img.shields.io/badge/dynamic/json?label=Node.js&query=engines[%27node%27]&url=https://raw.githubusercontent.com/ewilan-riviere/drone/main/package.json&style=flat-square&colorA=18181B&colorB=F0DB4F
 [node-version-href]: https://nodejs.org/en/
-
